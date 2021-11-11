@@ -20,18 +20,24 @@ const client = new MongoClient(uri, {
 async function run() {
     try {
         await client.connect();
-        const database = client.db("insertDB");
+        const database = client.db("riders-paradise");
         const usersCollection = database.collection("users");
+
+        // get a specific user
+        app.get("/users/:email", async (req, res) => {
+            const email = req.params.email;
+            const user = await usersCollection.findOne({ email });
+            user ? res.json(user) : res.json({});
+        });
 
         // add user to database
         app.post("/users", async (req, res) => {
             const user = req.body;
             const result = await usersCollection.insertOne(user);
-            console.log(result);
             res.json(result);
         });
     } finally {
-        await client.close();
+        // await client.close();
     }
 }
 run().catch(console.dir);
