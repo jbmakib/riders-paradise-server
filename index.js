@@ -22,6 +22,7 @@ async function run() {
         await client.connect();
         const database = client.db("riders-paradise");
         const usersCollection = database.collection("users");
+        const productsCollection = database.collection("products");
 
         // get a specific user
         app.get("/users/:email", async (req, res) => {
@@ -58,6 +59,13 @@ async function run() {
                     message: "you do not have access to make admin",
                 });
             }
+        });
+
+        // get all product
+        app.get("/products", async (req, res) => {
+            const cursor = productsCollection.find({});
+            const products = await cursor.toArray();
+            res.json(products);
         });
     } finally {
         // await client.close();
