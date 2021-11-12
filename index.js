@@ -23,6 +23,7 @@ async function run() {
         const database = client.db("riders-paradise");
         const usersCollection = database.collection("users");
         const productsCollection = database.collection("products");
+        const ordersCollection = database.collection("orders");
 
         // get a specific user
         app.get("/users/:email", async (req, res) => {
@@ -74,6 +75,34 @@ async function run() {
             const query = { _id: ObjectId(_id) };
             const product = await productsCollection.findOne(query);
             res.json(product);
+        });
+
+        // post api for adding a new order
+        app.post("/orders", async (req, res) => {
+            const order = req.body;
+            const result = await ordersCollection.insertOne(order);
+            res.json(result);
+        });
+
+        // get api for orders by email
+        app.get("/orders/:byEmail", async (req, res) => {
+            const email = req.params.byEmail;
+            const cursor = ordersCollection.find({ email });
+            const myOrders = await cursor.toArray();
+            res.json(myOrders);
+        });
+
+        // get api for admin and check is admin true
+        app.get("/orders/admin/:byEmail", async (req, res) => {
+            const email = req.params.byEmail;
+            const admin = await usersCollection.findOne({ email });
+            if (admin.role === "admin") {
+                const cursor = ordersCollection.find({});
+                const allOrders = await cursor.toArray();
+                res.json(allOrders);
+            } else {
+                res.status(403).json({ message: "Forbidden" });
+            }
         });
     } finally {
         // await client.close();
