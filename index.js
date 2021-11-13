@@ -24,6 +24,9 @@ async function run() {
         const usersCollection = database.collection("users");
         const productsCollection = database.collection("products");
         const ordersCollection = database.collection("orders");
+        const messagesCollection = database.collection("messages");
+
+        /* user part starts */
 
         // get a specific user
         app.get("/users/:email", async (req, res) => {
@@ -62,6 +65,9 @@ async function run() {
             }
         });
 
+        /* user part ends */
+        /* product part starts */
+
         // get all product
         app.get("/products", async (req, res) => {
             const cursor = productsCollection.find({});
@@ -76,6 +82,16 @@ async function run() {
             const product = await productsCollection.findOne(query);
             res.json(product);
         });
+
+        // add a new product
+        app.post("/products", async (req, res) => {
+            const product = req.body;
+            const result = await productsCollection.insertOne(product);
+            res.json(result);
+        });
+
+        /* product part ends */
+        /* orders part starts */
 
         // post api for adding a new order
         app.post("/orders", async (req, res) => {
@@ -113,6 +129,31 @@ async function run() {
 
             res.json(result);
         });
+
+        /* orders part ends */
+        /* message part starts */
+
+        // post api for sending a message
+        app.post("/messages", async (req, res) => {
+            const order = req.body;
+            const result = await messagesCollection.insertOne(order);
+            res.json(result);
+        });
+
+        // post api for sending a message
+        app.get("/messages/admin/:byEmail", async (req, res) => {
+            const email = req.params.byEmail;
+            const admin = await usersCollection.findOne({ email });
+            if (admin.role === "admin") {
+                const cursor = messagesCollection.find({});
+                const messages = await cursor.toArray();
+                res.json(messages);
+            } else {
+                res.status(403).json({ message: "Forbidden" });
+            }
+        });
+
+        /* message part ends */
     } finally {
         // await client.close();
     }
