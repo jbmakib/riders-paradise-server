@@ -1,6 +1,6 @@
 # Riders Paradise Site
 
-### Visit [Client Side Code](https://github.com/programming-hero-web-course-4/niche-website-client-side-jbmakib) and [Server Side Code](https://github.com/programming-hero-web-course-4/niche-website-server-side-jbmakib)
+### Visit [Client Side Code](https://github.com/jbmakib/riders-paradise-client) and [Server Side Code](https://github.com/jbmakib/riders-paradise-server)
 
 ### A MotorBike selling website
 
@@ -21,6 +21,6 @@
 
 ## How to run?
 
--   Clone [Client Side Code](https://github.com/programming-hero-web-course-4/niche-website-client-side-jbmakib) and [Server Side Code](https://github.com/programming-hero-web-course-4/niche-website-server-side-jbmakib) and run `npm install` in terminal
--   Add your firebase configuration in `.env.local` file in client side and run `npm start` in client side terminal
+-   Clone [Client Side Code](https://github.com/jbmakib/riders-paradise-client) and [Server Side Code](https://github.com/jbmakib/riders-paradise-server) and run `npm install` in terminal
+-   Add your firebase configuration and server url in `.env.local` file in client side and run `npm start` in client side terminal
 -   Add your db configuration in `.env` file in server side code and run `npm run start-dev` in server side terminal
