@@ -10,13 +10,8 @@
 
 -   Used mongoDb as noSQL database for storing data
 -   Used node and express as server for send request from client side to database using server
--   You can add a new product
--   You can see only your order and can manage it
--   You can manage all of the order of the site as a admin. You can approve or decline any order
--   Get all orders API
--   Delete API
--   Update API
--   Post API
+-   Users can order products and manage them. They can write reviews to the site and send messages to admins.
+-   Admin can add and manage products. He is also able to see and manage users' orders and messages.
 -   Complete CRUD operation
 
 ## How to run?
